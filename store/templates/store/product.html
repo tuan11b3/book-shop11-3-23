@@ -1,0 +1,46 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-lg-4">
+            <img class="thumbnail" src="{% static 'images/book.png' %}">
+            <div class="box-element product">
+                <h6><strong>Product</strong></h6>
+                <hr>
+                <button class="btn btn-primary add-btn">Thêm vào giỏ hàng</button>
+                <h4 style="display: inline-block;float: right">20 VND</h4>
+            </div>
+        </div>
+
+        <div class="col-lg-8">
+            <div>
+                <h3>Product title + num page + language</h3>
+            </div>
+            <hr>
+            <div class="row">
+                <div class="col-lg-6">
+                    <p>Nhà xuất bản</p>
+                    <p>Nhà cung cấp</p>
+                </div>
+
+                <div class="col-lg-6">
+                     <p>Tác giả</p>
+                     <p>Hình thức bìa</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <br>
+    <div>
+        <form >
+            <div class="mb-3 mt-3">
+              <label for="comment">Comments:</label>
+              <textarea class="form-control" rows="3" id="comment" name="text"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+
+{% endblock content %}

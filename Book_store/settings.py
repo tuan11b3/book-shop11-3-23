@@ -43,6 +43,7 @@ INSTALLED_APPS = [
 
     #'store.apps.StoreConfig',
     'store',
+    'users',
 ]
 
 MIDDLEWARE = [
@@ -139,3 +140,12 @@ STATICFILES_DIRS = [
 MEDIA_URL = '/images/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+
+
+# My settings
+
+LOGIN_URL = "users:login"
+LOGOUT_URL = "users:logout"
+
+#LOGIN_REDIRECT_URL = "store:store"
+LOGOUT_REDIRECT_URL = "store:store"

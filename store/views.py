@@ -90,12 +90,15 @@ def processOrder(request):
     order.save()
 
     if order.shipping == True:
-        ShippingAddress.objects.create(
-            customer=customer,
-            order=order,
+        sh_add = ShippingAddress(
+            # customer=customer,
+            # order=order,
             address=data['shipping']['address'],
             city=data['shipping']['city'],
             province=data['shipping']['state'],
             zipcode=data['shipping']['zipcode'],
         )
+        sh_add.save()
+
+        DSDCKM.objects.create(cus_id = customer, add_id = sh_add)
     return JsonResponse('Payment completed', safe=False)

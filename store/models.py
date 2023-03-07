@@ -1,13 +1,27 @@
 from django.db import models
-from django.contrib.auth.models import User
+#from django.contrib.auth.models import User
+from django.conf import settings
+from phonenumber_field.modelfields import PhoneNumberField
 
-# Create your models here.
+User = settings.AUTH_USER_MODEL
+
+
+class Staff(models.Model):
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
+    fullname = models.CharField(max_length=200, null=True)
+    email = models.EmailField(max_length=255, null=True)
+    phone = PhoneNumberField(null=False, blank=False, unique=True)
+    cmnd = models.CharField(max_length=12, blank=False, null=False, unique=True)
+    address = models.CharField(max_length=511, blank=False, null=False)
+    salary = models.DecimalField(max_digits=11, decimal_places=2)
+    employment_type = models.CharField(max_length=200, blank=False, null=False)
+    date_joined = models.DateTimeField(auto_now_add=True)
 
 class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
-    email = models.CharField(max_length=200, null=True)
-    phone_num = models.CharField(max_length=10, null=True, blank = True)
+    email = models.EmailField(max_length=255, null=True, unique=True)
+    phone = PhoneNumberField(null=True, blank=False, unique=True)
 
     def __str__(self):
         return str(self.name)
@@ -38,12 +52,33 @@ class Product(models.Model):
             url = ''
         return url
 
+class ShippingAddress(models.Model):
+    #customer = models.ForeignKey(Customer,  on_delete=models.SET_NULL, blank=True, null = True)
+    #order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null = True)
+    address = models.CharField(max_length=200, null=True)
+    city = models.CharField(max_length=200, null=True)
+    province = models.CharField(max_length=200, null=True)
+    zipcode = models.CharField(max_length=200, null=True)
+    date_added = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.address)
+
+class DSDCKM(models.Model):
+    cus_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
+    add_id = models.ForeignKey(ShippingAddress, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = ('cus_id', 'add_id')
+
+
 class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_order = models.DateTimeField(auto_now_add=True)
     complete = models.BooleanField(default=False, null=True, blank=False)
     transaction_id = models.CharField(max_length=200, null=True)
-
+    shippingaddress = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, blank=True, null=True)
+    #phone_num = models.CharField(max_length=10, null=True, blank=True)
     def __str__(self):
         return str(self.id)
 
@@ -80,16 +115,3 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
-
-
-class ShippingAddress(models.Model):
-    customer = models.ForeignKey(Customer,  on_delete=models.SET_NULL, blank=True, null = True)
-    order = models.ForeignKey(Order, on_delete=models.SET_NULL, blank=True, null = True)
-    address = models.CharField(max_length=200, null=True)
-    city = models.CharField(max_length=200, null=True)
-    province = models.CharField(max_length=200, null=True)
-    zipcode = models.CharField(max_length=200, null=True)
-    date_added = models.DateTimeField(auto_now_add=True)
-
-    def __str__(self):
-        return str(self.address)

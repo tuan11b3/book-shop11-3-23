@@ -5,6 +5,11 @@
 
   <form method="post" action="{% url 'users:register' %}">
       {% csrf_token %}
+
+      {% if form_2 %}
+      {{ form_2.as_p }}
+      {% endif %}
+
       {{ form.as_p }}
 
       <button name="submit">Register</button>

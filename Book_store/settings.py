@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
     # Third party apps.
     'bootstrap4',
+    'betterforms',
 
     #'store.apps.StoreConfig',
     'store',
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'Book_store.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'bookshop',
+        'NAME': 'bookshop3',
         'USER': 'root',
         'PASSWORD': '30102001',
         'HOST':'localhost',
@@ -149,3 +150,5 @@ LOGOUT_URL = "users:logout"
 
 #LOGIN_REDIRECT_URL = "store:store"
 LOGOUT_REDIRECT_URL = "store:store"
+
+AUTH_USER_MODEL = 'users.myUser' #new

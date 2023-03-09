@@ -7,14 +7,13 @@ User = settings.AUTH_USER_MODEL
 
 
 class Staff(models.Model):
-    user_id = models.OneToOneField(User, on_delete=models.CASCADE, primary_key = True)
+    user_id = models.OneToOneField(User, on_delete=models.CASCADE)
     fullname = models.CharField(max_length=200, null=True)
     email = models.EmailField(max_length=255, null=True)
     phone = PhoneNumberField(null=False, blank=False, unique=True)
     cmnd = models.CharField(max_length=12, blank=False, null=False, unique=True)
     address = models.CharField(max_length=511, blank=False, null=False)
     salary = models.DecimalField(max_digits=11, decimal_places=2)
-    employment_type = models.CharField(max_length=200, blank=False, null=False)
     date_joined = models.DateTimeField(auto_now_add=True)
 
 class Customer(models.Model):

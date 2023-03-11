@@ -11,3 +11,14 @@ admin.site.register(Order)
 admin.site.register(OrderItem)
 admin.site.register(ShippingAddress)
 admin.site.register(DSDCKM)
+
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ('id', 'date', 'happy', 'responded', 'staff_id')
+    list_filter = ('responded', 'date',)
+    search_fields = ( 'details',)
+
+    class Meta:
+        model = Feedback
+
+
+admin.site.register(Feedback, FeedbackAdmin)

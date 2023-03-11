@@ -20,7 +20,7 @@ class Customer(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, null=True, blank=True)
     name = models.CharField(max_length=200, null=True)
     email = models.EmailField(max_length=255, null=True, unique=True)
-    phone = PhoneNumberField(null=True, blank=False, unique=True)
+    phone = PhoneNumberField(null=True, blank=False)
 
     def __str__(self):
         return str(self.name)
@@ -119,3 +119,14 @@ class OrderItem(models.Model):
     def get_total(self):
         total = self.product.price * self.quantity
         return total
+
+class Feedback(models.Model):
+    custom_id = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=False, null=False)
+    details = models.TextField()
+    happy = models.BooleanField()
+    responded = models.BooleanField()
+    staff_id = models.ForeignKey(Staff, on_delete=models.SET_NULL, blank=True, null=True)
+    date = models.DateField(auto_now_add=True)
+
+    def __str__(self):
+        return str(self.id)

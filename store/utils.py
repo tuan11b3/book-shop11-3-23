@@ -57,6 +57,7 @@ def guestOrder(request, data):
     print('COOKIES:', request.COOKIES)
     name = data['form']['name']
     email = data['form']['email']
+    phone = data['form']['phone']
 
     print('name: ', name)
     print('email: ', email)
@@ -65,8 +66,9 @@ def guestOrder(request, data):
     items = cookieData['items']
 
     customer, created = Customer.objects.get_or_create(
-        email=email, name=name
+        email=email,
     )
+    customer.phone = phone
     customer.name = name
     customer.save()
 

@@ -21,7 +21,7 @@
             <div class="row mx-auto">
                 {% for product in products %}
                 <div class="card mx-auto mb-3">
-                    <a href="{% url 'store:product' %}">
+                    <a href="{% url 'store:product' product.id %}">
                         <img class="thumbnail" src="{{product.imageURL}}">
                     </a>
                     <div class="box-element product">

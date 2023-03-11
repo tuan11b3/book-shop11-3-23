@@ -56,8 +56,11 @@ def checkout(request):
     context = {'items': items, 'order': order, 'cartItems': cartItems}
     return render(request, 'store/checkout.html', context)
 
-def product(request):
-    context = {}
+def product(request, product_id):
+
+    product = Product.objects.get(id = product_id)
+    context = {'product': product}
+
     return render(request, 'store/product.html', context)
 
 def updateItem(request):

@@ -2,6 +2,7 @@
 {% load static %}
 
 {% block content %}
+<div class="container">
     <div class="row">
         <div class="col-lg-12">
             <div class="box-element">
@@ -33,7 +34,7 @@
                 <div class="cart-row">
                     <div style="flex:2"><img class="row-image" src="{{item.product.imageURL}}"></div>
                     <div style="flex:2"><p>{{item.product.name}}<p></p></div>
-                    <div style="flex:1"><p>{{item.product.price|floatformat:2}} (VND)</p></div>
+                    <div style="flex:1"><p>$ {{item.product.price|floatformat:2}}</p></div>
                     <div style="flex:1">
                         <p class="quantity">x{{item.quantity}}</p>
                         <div class="quantity">
@@ -43,11 +44,12 @@
 
                         </div>
                     </div>
-                    <div style="flex:1">{{item.get_total}}</div>
+                    <div style="flex:1">$ {{item.get_total}}</div>
                 </div>
                 {% endfor %}
 
             </div>
         </div>
     </div>
+</div>
 {% endblock content %}

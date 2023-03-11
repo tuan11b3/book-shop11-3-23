@@ -72,11 +72,11 @@ var csrftoken = getToken('csrftoken');
   <div class="container-fluid">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" href="store:store">Store<span class="sr-only">(current)</span></a>
+        <a class="nav-link" href="{% url 'store:store' %}">Cửa hàng</a>
       </li>
-
         </ul>
-      <div class="form-inline my-2 my-lg-0"><ul class="navbar-nav mr-auto">
+
+      <div class="form-inline my-2 my-lg-0"><ul class="navbar-nav mr-auto" >
       <li class="nav-item active">
 
           {% if user.is_authenticated %}
@@ -93,16 +93,14 @@ var csrftoken = getToken('csrftoken');
           <img  id="cart-icon" src="{% static 'images/cart1.png' %}">
         </a>
         <p id="cart-total">{{cartItems}}</p>
-
+        </ul>
     </div>
   </div>
 </nav>
 
-    <div class="container">
         {% block content %}
 
         {% endblock content %}
-    </div>
 
 <!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>-->
     <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

@@ -8,6 +8,22 @@ from . utils import cookieCart, cartData, guestOrder
 
 
 # Create your views here.
+
+def collection(request, collection_id):
+    "Show all product at category = collection_id"
+    # category = Category.objects.get(id = collection_id)
+    # products = category.product.all()
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+
+    categories = Category.objects.all()
+    products = Product.objects.filter(category = collection_id)
+
+    context = {'products': products, 'cartItems': cartItems, 'categories': categories}
+
+    return render(request, 'store/collection.html', context)
+
 def store(request):
     data = cartData(request)
 
@@ -16,7 +32,8 @@ def store(request):
     items = data['items']
 
     products = Product.objects.all()
-    context = {'products':products, 'cartItems': cartItems}
+    categories = Category.objects.all()
+    context = {'products':products, 'cartItems': cartItems, 'categories': categories}
     return render(request, 'store/store.html', context)
 
 def cart(request):
@@ -83,6 +100,7 @@ def processOrder(request):
 
     total = float(data['form']['total'])
     order.transaction_id = transaction_id
+    order.total = order.get_cart_total
 
     if total == float(order.get_cart_total):
         order.complete = True
@@ -99,6 +117,8 @@ def processOrder(request):
             zipcode=data['shipping']['zipcode'],
         )
         sh_add.save()
+        order.shippingaddress = sh_add
+        order.save()
 
         DSDCKM.objects.create(cus_id = customer, add_id = sh_add)
     return JsonResponse('Payment completed', safe=False)

@@ -1,0 +1,8 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+
+    <h1>Thanks for your response.</h1>
+    <p><a href="{% url 'store:feedback' %}">Response again?</a></p>
+{% endblock content %}

@@ -1,0 +1,10 @@
+{% extends 'store/main.html' %}
+{% load static %}
+
+{% block content %}
+<form action="{% url 'store:feedback' %}" method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" />
+</form>
+{% endblock content %}

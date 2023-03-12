@@ -5,6 +5,7 @@ import datetime
 
 from .models import *
 from . utils import cookieCart, cartData, guestOrder
+from .forms import FeedbackForm
 
 
 # Create your views here.
@@ -125,3 +126,19 @@ def processOrder(request):
 
         DSDCKM.objects.create(cus_id = customer, add_id = sh_add)
     return JsonResponse('Payment completed', safe=False)
+
+def feedback_form(request):
+    if request.method != 'POST':
+        form = FeedbackForm()
+    else:
+        form = FeedbackForm(request.POST)
+
+        if form.is_valid():
+            new_feedback = form.save(commit=False)
+            new_feedback.custom_id = Customer.objects.get(user = request.user)
+            new_feedback.save()
+            return render(request, 'store/thanks.html')
+
+    context = {'form': form}
+    return render(request, 'store/feedback_form.html', context)
+'store/product.html'

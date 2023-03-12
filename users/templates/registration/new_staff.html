@@ -1,0 +1,20 @@
+{% extends "store/main.html" %}
+{% load static %}
+
+{% block content %}
+
+  <form method="post" action="{% url 'users:new_staff' %}">
+      {% csrf_token %}
+
+      {% if form_2 %}
+      {{ form_2.as_p }}
+      {% endif %}
+
+      {{ form.as_p }}
+
+      <button name="submit">Register</button>
+      <input type="hidden" name="next" value="% url 'store:store' %}" />
+
+  </form>
+
+{% endblock content %}

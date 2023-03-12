@@ -3,7 +3,6 @@ from .models import *
 
 # Register your models here.
 
-admin.site.register(Staff)
 admin.site.register(Customer)
 admin.site.register(Category)
 admin.site.register(Product)
@@ -15,7 +14,7 @@ admin.site.register(DSDCKM)
 class FeedbackAdmin(admin.ModelAdmin):
     list_display = ('id', 'date', 'happy', 'responded', 'staff_id')
     list_filter = ('responded', 'date',)
-    search_fields = ( 'details',)
+    search_fields = ('details',)
 
     class Meta:
         model = Feedback

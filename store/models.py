@@ -124,9 +124,10 @@ class Feedback(models.Model):
     custom_id = models.ForeignKey(Customer, on_delete=models.CASCADE, blank=False, null=False)
     details = models.TextField()
     happy = models.BooleanField()
-    responded = models.BooleanField()
+    responded = models.BooleanField(blank=True, null=True)
     staff_id = models.ForeignKey(Staff, on_delete=models.SET_NULL, blank=True, null=True)
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
         return str(self.id)
+

@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import json
 import datetime
+from django.views.generic import ListView
+from django.db.models import Q
 
 from .models import *
 from . utils import cookieCart, cartData, guestOrder
@@ -142,3 +144,29 @@ def feedback_form(request):
     context = {'form': form}
     return render(request, 'store/feedback_form.html', context)
 'store/product.html'
+
+class ProductSearchListView(ListView):
+    model = Product
+    template_name = 'store/search-product.html'
+    # context_object_name = 'products'
+    def get_queryset(self):
+        data = cartData(self.request)
+
+        cartItems = data['cartItems']
+        categories = Category.objects.all()
+
+        query = self.request.GET.get('q')
+        print("query: ", query)
+        products=Product.objects.filter(Q(name__icontains=query))
+        context = {'products':products, 'cartItems': cartItems, 'categories': categories}
+        return context
+    
+def product_search(request):
+    data = cartData(request)
+
+    cartItems = data['cartItems']
+    query = request.GET.get('q')
+    products=Product.objects.filter(Q(name__icontains=query))
+    categories = Category.objects.all()
+    context = {'products':products, 'cartItems': cartItems, 'categories': categories}
+    return render(request, 'store/store.html', context)

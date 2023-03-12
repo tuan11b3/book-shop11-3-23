@@ -5,38 +5,47 @@
 <div class="container-fluid mt-3">
     <div class="row">
 
-        <div class="col-lg-3 mx-auto">
-			<div class="list-group">
-
-				<a href="{% url 'store:store' %}" class="list-group-item list-group-item-action btn btn-outline-success"><strong>All Products</strong></a>
-
-				{% for category in categories %}
-				<a href="{% url 'store:collection' category.id %}"
-					class="list-group-item list-group-item-action btn btn-outline-success ">{{category.name}}</a>
-				{% endfor %}
-			</div>
+        <div class="col-lg-3 mg-t-15">
+			<div class="card widget-10 shadow-base">
+                <div class="card-header">
+                  <div class="card-title">Categories</div>
+                </div>
+                <div class="list-group list-group-flush tx-13">
+                  <a href="{% url 'store:store' %}" class="list-group-item list-group-item-action">All Books</a>
+                  {% for category in categories %}
+                    <a href="{% url 'store:collection' category.id %}" class="list-group-item list-group-item-action">{{category.name}}</a> 
+                  {% endfor %}
+                </div>
+              </div>
 		</div>
 
-        <div id='products' class="col-lg-9 mx-auto">
-            <div class="row mx-auto">
+        <div id='products' class="col-lg-9 d-flex flex-row">
+            <div class="row">
                 {% for product in products %}
-                <div class="card mx-auto mb-3">
-                    <a href="{% url 'store:product' product.id %}">
-                        <img class="thumbnail" src="{{product.imageURL}}">
-                    </a>
-                    <div class="box-element product">
-                        <h6><strong>{{product.name}}</strong></h6>
-                        <hr>
-                        <button data-product={{product.id}} data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
-                         <a class="btn btn-outline-success" href="#">View</a>
-                        <h4 style="display: inline-block;float: right">$ {{product.price|floatformat:2}}</h4>
-                        <br>
-                        <h4 style="display: inline-block;float: right">{% widthratio product.price 1 23707.50 %} VND</h4>
-                        <br>
+                    <div class="card pd-25 bd-0 shadow-base m-3" style="width: 300px;">
+                        <div class="d-flex justify-content-between align-items-center">
+                            {% if product.discount != 0.0 %}
+                                <span class="bg-danger pd-y-3 pd-x-10 tx-white tx-11 tx-roboto">{{product.discount}}% off</span>
+                            {% endif %}
+                            <a href="{% url 'store:product' product.id %}" class="tx-gray-600"><i class="fa fa-heart-o"></i></a>
+                        </div>
+                        <a href="{% url 'store:product' product.id %}">
+                            <img src="{{product.imageURL}}" class="img-fluid" alt="book" style="width: 295px; height: 295px">
+                        </a>
+                        <div class="d-flex justify-content-between mg-b-5">
+                            <p class="mg-b-0 tx-14 mg-t-3"><a href="{% url 'store:product' product.id %}" class="tx-inverse">{{product.name}}</a></p>
+                            <p class="tx-danger tx-lato mg-b-0 font-weight-bold">{{product.price|floatformat:2}}$</p>
+                        </div>
+                        <div class="d-flex justify-content-between mg-b-5">
+                            {% if product.digital %}
+                                <span class="badge badge-pill badge-warning">E-book</span>
+                            {% else %}
+                                <span class="badge badge-pill badge-info">Printed book</span>
+                            {% endif %}
+                        </div>
+                        <button data-product={{product.id}} data-action="add" class="btn btn-dark pd-x-25 pd-y-12 tx-11 tx-mont tx-uppercase tx-semibold d-block mg-t-15 add-btn update-cart">Add to cart</button>
                     </div>
-
-                </div>
-        {% endfor %}
+                {% endfor %}
             </div>
        </div>
     </div>

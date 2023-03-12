@@ -2,19 +2,16 @@
 {% load static %}
 
 {% block content %}
-
+<div class="form_container">
+  <h2 class="text-center mt-3">Create an account</h2>
   <form method="post" action="{% url 'users:register' %}">
-      {% csrf_token %}
-
-      {% if form_2 %}
-      {{ form_2.as_p }}
-      {% endif %}
-
-      {{ form.as_p }}
-
-      <button name="submit">Register</button>
-      <input type="hidden" name="next" value="% url 'store:store' %}" />
-
-  </form>
-
+    {% csrf_token %}
+    {% if form_2 %}
+    {{ form_2.as_p }}
+    {% endif %}
+    {{ form.as_p }}
+    <button name="submit">Register</button>
+    <input type="hidden" name="next" value="% url 'store:store' %}" />
+</form>
+</div>
 {% endblock content %}

@@ -49,6 +49,17 @@ p {
   margin-left: 15px;
 }
 
+.cart-row i {
+  color: black; 
+  cursor: pointer;
+  transform: translateX(20px);
+  transition: 0.5;
+}
+
+.cart-row i:hover {
+  color: red;
+}
+
 #cart-total {
   display: block;
   text-align: center;

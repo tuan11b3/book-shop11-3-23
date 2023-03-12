@@ -3,7 +3,7 @@
 
 {% block content %}
 <div class="container">
-    <div class="col-lg-12 mt-4">
+    <div class="col-lg-12 mt-5">
         <div class="card bd-0 pd-0 shadow-base">
           <div class="row no-gutters">
             <div class="col-md-12 col-lg-4">
@@ -44,16 +44,22 @@
               <ul class="list-unstyled tx-12 mg-b-20 mg-lg-b-auto">
               </ul>
 
-              <button class="btn btn-dark btn-block tx-size-xs tx-bold">Add to card</button>
+              <button data-product="{{product.id}}" data-action="add" class="btn btn-dark btn-block tx-size-xs tx-bold">Add to card</button>
             </div>
           </div>
         </div>
       </div>
     <br>
     <br>
-    <div class="col-lg-12 mb-5">
+    <!-- <div class="col-lg-12 mb-5">
         <h2>Reviews</h2>
-        <button class="btn btn-outline-dark mg-b-15"><i class="fa-solid fa-pen mg-r-5"></i> Write your comment</button>
+        <form style="padding: 0;">
+          <div class="mb-3 mt-3">
+            <label for="comment">Comments:</label>
+            <textarea class="form-control" rows="3" id="comment" name="text"></textarea>
+          </div>
+          <button class="btn btn-outline-dark mg-b-15 wd-200 mt-0"><i class="fa-solid fa-pen mg-r-5"></i> Submit comment</button>
+        </form>
         <div class="card shadow-base bd-0 pd-25 ht-100p mg-b-15">
             <div class="media mg-b-25">
               <img src="https://via.placeholder.com/500" class="d-flex wd-40 rounded-circle mg-r-15" alt="Image">
@@ -80,7 +86,7 @@
               <a href="" class="tx-info">18 Likes</a>
             </p>
         </div>
-    </div>
+    </div> -->
     <!-- <div>
         <form >
             <div class="mb-3 mt-3">

@@ -24,23 +24,18 @@
                 {% for product in products %}
                     <div class="card pd-25 bd-0 shadow-base m-3" style="width: 300px;">
                         <div class="d-flex justify-content-between align-items-center">
-                            <span class="bg-danger pd-y-3 pd-x-10 tx-white tx-11 tx-roboto">20% off</span>
-                            <a href="{% url 'store:product' %}" class="tx-gray-600"><i class="fa fa-heart-o"></i></a>
+                            {% if product.discount != 0.0 %}
+                                <span class="bg-danger pd-y-3 pd-x-10 tx-white tx-11 tx-roboto">{{product.discount}}% off</span>
+                            {% endif %}
+                            <a href="{% url 'store:product' product.id %}" class="tx-gray-600"><i class="fa fa-heart-o"></i></a>
                         </div>
-                        <a href="{% url 'store:product' %}">
+                        <a href="{% url 'store:product' product.id %}">
                             <img src="{{product.imageURL}}" class="img-fluid" alt="book" style="width: 295px; height: 295px">
                         </a>
                         <div class="d-flex justify-content-between mg-b-5">
-                            <p class="mg-b-0 tx-14 mg-t-3"><a href="{% url 'store:product' %}" class="tx-inverse">{{product.name}}</a></p>
+                            <p class="mg-b-0 tx-14 mg-t-3"><a href="{% url 'store:product' product.id %}" class="tx-inverse">{{product.name}}</a></p>
                             <p class="tx-danger tx-lato mg-b-0 font-weight-bold">{{product.price|floatformat:2}}$</p>
                         </div>
-                        <!-- <div class="mg-b-20 tx-warning">
-                            <i class="icon ion-star"></i>
-                            <i class="icon ion-star"></i>
-                            <i class="icon ion-star"></i>
-                            <i class="icon ion-star"></i>
-                            <i class="icon ion-star"></i>
-                        </div> -->
                         <button data-product={{product.id}} data-action="add" class="btn btn-success btn-oblong pd-x-25 pd-y-12 tx-11 tx-mont tx-uppercase tx-semibold d-block mg-t-15 add-btn update-cart">Add to cart</button>
                     </div>
                 {% endfor %}

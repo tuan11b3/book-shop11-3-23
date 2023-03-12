@@ -16,6 +16,7 @@
     <!-- my css -->
     <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/footer.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
 
     <meta charset="utf-8">
@@ -85,12 +86,16 @@ var csrftoken = getToken('csrftoken');
     <div>
       <ul class="nav nav-effect nav-effect-2 flex-column flex-md-row" role="tablist">
         {% if user.is_authenticated %}
-          <li class="nav-item">
-            <a class="nav-link" href="#" role="tab" aria-selected="false">Hello {{user.username }}</a>
-          </li>
-          <li class="nav-item current">
-            <a class="nav-link active show" href="{% url 'users:logout' %}" role="tab" aria-selected="true">Log out</a>
-          </li>
+          <div class="dropdown">
+            <button class="btn btn-secondary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+              <i class="fa-regular fa-user"></i>
+            </button>
+            <div class="dropdown-menu">
+              <span class="dropdown-item">Hello, {{user.username }}</span>
+              <a class="dropdown-item" href="{% url 'store:feedback' %}">Feedback</a>
+              <a class="dropdown-item" href="{% url 'users:logout' %}">Log out</a>
+            </div>
+          </div>
         {% else %}
           <li class="nav-item current">
             <a class="nav-link active show" href="{% url 'users:login' %}" role="tab" aria-selected="true">Log in</a>
@@ -110,8 +115,54 @@ var csrftoken = getToken('csrftoken');
     </div>
   </div>
 
-  {% block content %}
-  {% endblock content %}
+  <div class="content-wrap">
+    {% block content %}
+    {% endblock content %}
+  </div>
+
+  <footer class="footer">
+    <div class="container">
+     <div class="row">
+       <div class="footer-col">
+         <h4>company</h4>
+         <ul>
+           <li><a href="#">About us</a></li>
+           <li><a href="#">Our services</a></li>
+           <li><a href="#">Privacy policy</a></li>
+           <li><a href="#">Affiliate program</a></li>
+         </ul>
+       </div>
+       <div class="footer-col">
+         <h4>get help</h4>
+         <ul>
+           <li><a href="#">FAQ</a></li>
+           <li><a href="#">Shipping</a></li>
+           <li><a href="#">Returns</a></li>
+           <li><a href="#">Order status</a></li>
+           <li><a href="#">Payment options</a></li>
+         </ul>
+       </div>
+       <!-- <div class="footer-col">
+         <h4>Online shop</h4>
+         <ul>
+           <li><a href="#">Watch</a></li>
+           <li><a href="#">Bag</a></li>
+           <li><a href="#">Shoes</a></li>
+           <li><a href="#">Dress</a></li>
+         </ul>
+       </div> -->
+       <div class="footer-col">
+         <h4>follow us</h4>
+         <div class="social-links">
+           <a href="#"><i class="fab fa-facebook-f"></i></a>
+           <a href="#"><i class="fab fa-twitter"></i></a>
+           <a href="#"><i class="fab fa-instagram"></i></a>
+           <a href="#"><i class="fab fa-linkedin-in"></i></a>
+         </div>
+       </div>
+     </div>
+    </div>
+ </footer>
 
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>

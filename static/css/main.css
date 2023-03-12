@@ -5,6 +5,9 @@
 
 body {
   background-color: #fff;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 h1,
@@ -116,4 +119,12 @@ p {
 
 .hidden {
   display: none !important;
+}
+
+.dropdown-menu.show {
+  left: -50px !important;
+}
+
+.content-wrap {
+  padding-bottom: 2.5rem;
 }

@@ -5,11 +5,11 @@
 	overflow: hidden;
 	max-width: 100%;
 	width: 650px;
-    /* margin: 3rem auto; */
-    position: absolute;
+    margin: 3rem auto;
+    /* position: absolute;
     top: 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%); */
 }
 
 .form_container h2 {
@@ -18,6 +18,7 @@
 
 form {
 	padding: 20px 40px;	
+	margin-bottom: 30px;
 }
 
 form label {
@@ -25,9 +26,10 @@ form label {
 	margin-bottom: 5px;
     margin-top: 10px;
     font-weight: 700;
+	color: black;
 }
 
-form input {
+form input:not(input[type="radio"]) {
 	border: 2px solid #f0f0f0;
 	border-radius: 4px;
 	display: block;

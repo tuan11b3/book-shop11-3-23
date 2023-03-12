@@ -9,33 +9,45 @@
                 <form id="form">
                     {% csrf_token %}
                     <div id="user-info">
-                        <p>User information</p>
-                        <div class="form-field">
+                        <h5>User information</h5>
+                        <div class="form-group">
                             <input required class="form-control" type="text" name="name" placeholder="Full name">
                         </div>
-                        <div class="form-field">
+                        <div class="form-group">
                             <input required class="form-control" type="email" name="email" placeholder="Email">
                         </div>
-                        <div class="form-field">
+                        <div class="form-group">
                             <input required class="form-control" type="tel" name="phone" placeholder="Phone number">
                         </div>
 
                     </div>
 
                     <div id="shipping-info">
-                        <hr>
-                        <p>Shipping information</p>
-                        <div class="form-field">
+                        <br>
+                        <h5>Shipping information</h5>
+                        <div class="form-group">
                             <input class="form-control" type="text" name="address" placeholder="Address">
                         </div>
-                        <div class="form-field">
+                        <div class="form-group">
                             <input class="form-control" type="text" name="city" placeholder="City">
                         </div>
-                        <div class="form-field">
+                        <div class="form-group">
                             <input class="form-control" type="text" name="state" placeholder="Province">
                         </div>
-                        <div class="form-field">
+                        <div class="form-group">
                             <input class="form-control" type="text" name="zipcode" placeholder="Zip code">
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label mt-0" for="exampleRadios1">
+                              Paypal
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <label class="form-check-label mt-0" for="exampleRadios2">
+                              Cash on delivery
+                            </label>
                         </div>
                     </div>
 

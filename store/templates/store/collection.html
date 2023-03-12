@@ -19,7 +19,7 @@
               </div>
 		</div>
 
-        <div id='products' class="col-lg-9 mx-auto">
+        <div id='products' class="col-lg-9 d-flex flex-row">
             <div class="row">
                 {% for product in products %}
                     <div class="card pd-25 bd-0 shadow-base m-3" style="width: 300px;">
@@ -36,7 +36,14 @@
                             <p class="mg-b-0 tx-14 mg-t-3"><a href="{% url 'store:product' product.id %}" class="tx-inverse">{{product.name}}</a></p>
                             <p class="tx-danger tx-lato mg-b-0 font-weight-bold">{{product.price|floatformat:2}}$</p>
                         </div>
-                        <button data-product={{product.id}} data-action="add" class="btn btn-success btn-oblong pd-x-25 pd-y-12 tx-11 tx-mont tx-uppercase tx-semibold d-block mg-t-15 add-btn update-cart">Add to cart</button>
+                        <div class="d-flex justify-content-between mg-b-5">
+                            {% if product.digital %}
+                                <span class="badge badge-pill badge-warning">E-book</span>
+                            {% else %}
+                                <span class="badge badge-pill badge-info">Printed book</span>
+                            {% endif %}
+                        </div>
+                        <button data-product={{product.id}} data-action="add" class="btn btn-dark pd-x-25 pd-y-12 tx-11 tx-mont tx-uppercase tx-semibold d-block mg-t-15 add-btn update-cart">Add to cart</button>
                     </div>
                 {% endfor %}
             </div>

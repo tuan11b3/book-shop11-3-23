@@ -75,15 +75,21 @@ var csrftoken = getToken('csrftoken');
 
 </head>
 <body>
-  <div class="ht-md-60 wd-200 wd-md-auto bg-br-primary pd-x-20 pd-y-20 pd-md-y-0 d-flex align-items-center justify-content-between">
+  <div class="ht-md-60 wd-200 wd-md-auto bg-br-primary pd-x-20 pd-y-20 pd-md-y-0 d-flex align-items-center justify-content-start">
     <a href="{% url 'store:store' %}" class="mg-b-0 tx-uppercase tx-bold tx-spacing--2 tx-inverse mg-r-20 tx-poppins"><img src="{% static 'images/goodreads-icon.png' %}" alt="" style="width: 30px; height: 30px;"></a>
-    <ul class="nav nav-effect nav-effect-2 flex-column flex-md-row" role="tablist">
-      <!-- <li class="nav-item current"><a class="nav-link active show" href="{% url 'store:store' %}" role="tab" aria-selected="true">Home</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" role="tab" aria-selected="false">About</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" role="tab" aria-selected="false">Services</a></li>
-      <li class="nav-item"><a class="nav-link" href="#" role="tab">Contact</a></li> -->
-    </ul>
-    <div>
+    <div class="src-area">
+      <form method="get" action="{% url 'store:product_search_list_view' %}" style="width: 290px; padding: 0; margin: 0; margin-left: 80px;">
+          <div class="row">
+            <div class="col-lg-8 mt-0">
+              <input class="src-input pr-0" type="text" name="q" placeholder="Search..." minlength="3" maxlength="30">
+            </div>
+            <div class="col-lg-4 mt-0 pl-0 pr-0"> 
+              <button style="margin: 0; width: 40px;" class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
+            </div>
+          </div>
+      </form>
+    </div>
+    <div class="mg-l-auto">
       <ul class="nav nav-effect nav-effect-2 flex-column flex-md-row" role="tablist">
         {% if user.is_authenticated %}
           <div class="dropdown">
@@ -120,6 +126,19 @@ var csrftoken = getToken('csrftoken');
       </ul>
     </div>
   </div>
+
+  <!-- <div class="src-area">
+      <form method="get" action="{% url 'store:product_search_list_view' %}" style="width: 200px; padding: 0; margin: 0;">
+          <div class="row">
+            <div class="col-lg-8 mt-0">
+              <input class="src-input pl-0 pr-0" type="text" name="q" placeholder="Search..." minlength="2">
+            </div>
+            <div class="col-lg-4 mt-0 pl-0 pr-0"> 
+              <button style="margin: 0;" class="src-btn" type="submit"><i class="ion-ios-search-strong"></i></button>
+            </div>
+          </div>
+      </form>
+  </div> -->
 
   <div class="content-wrap">
     {% block content %}

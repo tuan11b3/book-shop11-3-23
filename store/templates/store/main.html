@@ -2,10 +2,22 @@
 {% load static %}
 <html lang="en">
 <head>
-    <title>Ecom</title>
-<!--    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">-->
-   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <title>Goodreads</title>
+
+    <!-- vender css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+
+    <!-- bracket css -->
+    <link href="{% static 'css/bracket.css' %}" rel="stylesheet" type="text/css">
+    <!-- <link href="{% static 'css/bracket.dark.css' %}" rel="stylesheet" type="text/css"> -->
+
+    <!-- my css -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/navbar.css' %}">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/form.css' %}">
     <link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}">
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1" />
 
@@ -62,56 +74,52 @@ var csrftoken = getToken('csrftoken');
 
 </head>
 <body>
-
-  <nav class="navbar navbar-expand-lg bg-info navbar-dark">
-      <a class="navbar-brand" href="{% url 'store:store' %}">Ecom</a>
-  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-    <span class="navbar-toggler-icon"></span>
-  </button>
-
-  <div class="container-fluid">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item active">
-        <a class="nav-link" href="{% url 'store:store' %}">Cửa hàng</a>
-      </li>
-        <li class="nav-item active">
-        <a class="nav-link" href="{% url 'store:feedback' %}">feedback</a>
-      </li>
-        </ul>
-
-      <div class="form-inline my-2 my-lg-0"><ul class="navbar-nav mr-auto" >
-      <li class="nav-item active">
-
-          {% if user.is_authenticated %}
-                            <span class="navbar-text"> {{user.username }}  </span>
-                            <a href="{% url 'users:logout' %}" class="btn btn-danger">Log out</a>
-                    {% else %}
-
-                            <a href="{% url 'users:register' %}" class="btn btn-primary">Register</a>
-                            <a href="{% url 'users:login' %}" class="btn btn-warning">Login</a>
-                    {% endif %}
+  <div class="ht-md-60 wd-200 wd-md-auto bg-br-primary pd-x-20 pd-y-20 pd-md-y-0 d-flex align-items-center justify-content-between">
+    <a href="{% url 'store:store' %}" class="mg-b-0 tx-uppercase tx-bold tx-spacing--2 tx-inverse mg-r-20 tx-poppins"><img src="{% static 'images/goodreads-icon.png' %}" alt="" style="width: 30px; height: 30px;"></a>
+    <ul class="nav nav-effect nav-effect-2 flex-column flex-md-row" role="tablist">
+      <li class="nav-item current"><a class="nav-link active show" href="{% url 'store:store' %}" role="tab" aria-selected="true">Home</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" role="tab" aria-selected="false">About</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" role="tab" aria-selected="false">Services</a></li>
+      <li class="nav-item"><a class="nav-link" href="#" role="tab">Contact</a></li>
+    </ul>
+    <div>
+      <ul class="nav nav-effect nav-effect-2 flex-column flex-md-row" role="tablist">
+        {% if user.is_authenticated %}
+          <li class="nav-item">
+            <a class="nav-link" href="#" role="tab" aria-selected="false">Hello {{user.username }}</a>
           </li>
+          <li class="nav-item current">
+            <a class="nav-link active show" href="{% url 'users:logout' %}" role="tab" aria-selected="true">Log out</a>
+          </li>
+        {% else %}
+          <li class="nav-item current">
+            <a class="nav-link active show" href="{% url 'users:login' %}" role="tab" aria-selected="true">Log in</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'users:register' %}" role="tab" aria-selected="false">Sign up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link text-white" href="{% url 'store:cart' %}" role="tab" aria-selected="false">
+              <i class="fa-solid fa-cart-shopping"></i>
+              <span class="cart_number">{{cartItems}}</span>
+            </a>
+          </li>
+        {% endif %}
 
-        <a href="{% url 'store:cart' %}">
-          <img  id="cart-icon" src="{% static 'images/cart1.png' %}">
-        </a>
-        <p id="cart-total">{{cartItems}}</p>
-        </ul>
+      </ul>
     </div>
   </div>
-</nav>
 
-        {% block content %}
+  {% block content %}
+  {% endblock content %}
 
-        {% endblock content %}
+  <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/perfect-scrollbar/1.5.5/perfect-scrollbar.min.js" integrity="sha512-X41/A5OSxoi5uqtS6Krhqz8QyyD8E/ZbN7B4IaBSgqPLRbWVuXJXr9UwOujstj71SoVxh5vxgy7kmtd17xrJRw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.18.1/moment.min.js"></script>
 
-<!--<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous"></script>-->
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-
-	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
-    <script src="{% static 'js/cart.js' %}"></script>
+  <script src="{% static 'js/bracket.js' %}"></script>
+  <script src="{% static 'js/cart.js' %}"></script>
 </body>
 </html>

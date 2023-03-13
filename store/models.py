@@ -35,7 +35,7 @@ class Product(models.Model):
     name = models.CharField(max_length=200, null=True)
     price = models.DecimalField(max_digits=10, decimal_places=2)
     category = models.ForeignKey(Category, on_delete=models.CASCADE, default =1)
-    discount = models.FloatField()
+    discount = models.DecimalField(max_digits=10, decimal_places=2)
     language = models.CharField(max_length=50, null=True)
     num_page = models.IntegerField(default = 0)
     sold = models.IntegerField(default = 0 )
@@ -71,15 +71,17 @@ class DSDCKM(models.Model):
     cus_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     add_id = models.ForeignKey(ShippingAddress, on_delete=models.CASCADE)
 
-    class Meta:
-        unique_together = ('cus_id', 'add_id')
+    # class Meta:
+    #     unique_together = ('cus_id', 'add_id')
 
 
 class Order(models.Model):
+    status_name = ((0, 'Unpaid'), (1, 'Paid'), (2, 'Unshipped'), (3, 'Shipped'), (4, 'Complete'))
+
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_order = models.DateTimeField(auto_now_add=True)
-    complete = models.BooleanField(default=False, null=True, blank=False)
-    transaction_id = models.CharField(max_length=200, null=True)
+    #complete = models.BooleanField(default=False, null=True, blank=False)
+    status = models.IntegerField(choices=status_name, default=0, blank=True, null=True)
     shippingaddress = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, blank=True, null=True)
     staff_id = models.ForeignKey(Staff, on_delete=models.SET_NULL, blank=True, null=True)
     total = models.FloatField(default = 0)

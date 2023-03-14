@@ -46,7 +46,7 @@ def cart(request):
     order = data['order']
     items = data['items']
 
-    context = {'items': items, 'order': order, 'cartItems':cartItems}
+    context = {'items': items,'order': order, 'cartItems':cartItems}
     return render(request, 'store/cart.html', context)
 
 def checkout(request):
@@ -60,9 +60,11 @@ def checkout(request):
     return render(request, 'store/checkout.html', context)
 
 def product(request, product_id):
+    data = cartData(request)
 
+    cartItems = data['cartItems']
     product = Product.objects.get(id = product_id)
-    context = {'product': product}
+    context = {'product': product,  'cartItems':cartItems}
 
     return render(request, 'store/product.html', context)
 
@@ -76,7 +78,7 @@ def updateItem(request):
 
     customer = request.user.customer
     product = Product.objects.get(id=productId)
-    order, created = Order.objects.get_or_create(customer=customer, complete=False)
+    order, created = Order.objects.get_or_create(customer=customer, status=0)
 
     orderItem, created = OrderItem.objects.get_or_create(order=order, product=product)
 
@@ -84,6 +86,9 @@ def updateItem(request):
         orderItem.quantity = (orderItem.quantity + 1)
     elif action == 'remove':
         orderItem.quantity = (orderItem.quantity - 1)
+    elif action == 'delete':
+        orderItem.quantity = 0
+        orderItem.delete()
 
     orderItem.save()
 
@@ -99,7 +104,7 @@ def processOrder(request):
 
     if request.user.is_authenticated:
         customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        order, created = Order.objects.get_or_create(customer=customer, status=0)
 
     else:
         customer, order = guestOrder(request, data)
@@ -109,7 +114,7 @@ def processOrder(request):
     order.total = order.get_cart_total
 
     if total == float(order.get_cart_total):
-        order.complete = True
+        order.status = 1
 
     order.save()
 
@@ -142,8 +147,8 @@ def feedback_form(request):
             return render(request, 'store/thanks.html')
 
     context = {'form': form}
-    return render(request, 'store/feedback_form.html', context)
-'store/product.html'
+    return render(request, 'store/feedback.html', context)
+# 'store/product.html'
 
 class ProductSearchListView(ListView):
     model = Product

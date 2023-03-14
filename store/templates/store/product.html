@@ -34,17 +34,15 @@
               <p class="tx-13 m-1">Description: {{product.description}}</p>
             </div>
             <div class="col-md-6 col-lg-3 pd-20-force d-flex align-items-start flex-column">
-                {% if product.discount == 0.0 %}
-                    <h5 class="tx-normal mg-b-0">USD <span class="tx-danger tx-30 tx-bold tx-lato">{{product.price}}</span></h5>
-                {% else %}
-                    <span class="tx-warning tx-15"><span class="tx-lato">{{product.discount}}%</span> off</span>
-                    <h5 class="tx-normal mg-b-0">USD <span class="tx-danger tx-30 tx-bold tx-lato">{{product.price}}</span></h5>
-                {% endif %}
+
+                    <h5 class="tx-normal mg-b-0">$ <span class="tx-danger tx-30 tx-bold tx-lato">{{product.price}}</span></h5>
+                    <br>
+                    <h5 class="tx-normal mg-b-0">$ <span class="tx-danger tx-30 tx-bold tx-lato">{{product.discount}}</span></h5>
 
               <ul class="list-unstyled tx-12 mg-b-20 mg-lg-b-auto">
               </ul>
 
-              <button data-product="{{product.id}}" data-action="add" class="btn btn-dark btn-block tx-size-xs tx-bold">Add to card</button>
+              <button data-product="{{product.id}}" data-action="add" class="btn btn-dark btn-block tx-size-xs tx-bold update-cart">Add to card</button>
             </div>
           </div>
         </div>

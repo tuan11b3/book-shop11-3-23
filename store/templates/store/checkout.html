@@ -38,14 +38,14 @@
                             <input class="form-control" type="text" name="zipcode" placeholder="Zip code">
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
-                            <label class="form-check-label mt-0" for="exampleRadios1">
+                            <input class="form-check-input box-element hidden" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" checked>
+                            <label class="form-check-label mt-0 hidden" id = "chose1" for="exampleRadios1" >
                               Paypal
                             </label>
                         </div>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
-                            <label class="form-check-label mt-0" for="exampleRadios2">
+                            <input class="form-check-input hidden" type="radio" name="exampleRadios" id="exampleRadios2" value="option2">
+                            <label class="form-check-label hidden" id = "chose2" for="exampleRadios2">
                               Cash on delivery
                             </label>
                         </div>
@@ -60,7 +60,12 @@
             <div class="box-element hidden" id="payment-info">
                 <small>Paypal Options</small>
                 <div id="paypal-button-container"></div>
-<!--                <button id="make-payment">Make payment</button>-->
+
+            </div>
+
+            <div class="box-element hidden" id="payment-button">
+                <small>Paypal Options</small>
+                <button id="make-payment">Make payment</button>
             </div>
         </div>
 
@@ -81,7 +86,11 @@
                 <div class="cart-row">
                     <div style="flex:2"><img class="row-image" src={{item.product.imageURL}}></div>
                     <div style="flex:2"><p>{{item.product.name}}</p></div>
+                    {% if item.product.discount > 0.00 %}
+                    <div style="flex:1"><p>$ {{item.product.discount|floatformat:2}}</p></div>
+                    {% else %}
                     <div style="flex:1"><p>$ {{item.product.price|floatformat:2}}</p></div>
+                    {% endif %}
                     <div style="flex:1"><p>x{{item.quantity}}</p></div>
                     </div>
                 {% endfor %}
@@ -157,6 +166,34 @@
             console.log('Form Submitted...')
             document.getElementById('form-button').classList.add("hidden");
             document.getElementById('payment-info').classList.remove("hidden");
+            document.getElementById('exampleRadios1').classList.remove("hidden");
+            document.getElementById('chose1').classList.remove("hidden");
+            document.getElementById('exampleRadios2').classList.remove("hidden");
+            document.getElementById('chose2').classList.remove("hidden");
+
+            if (document.querySelector('input[name="exampleRadios"]')) {
+                  document.querySelectorAll('input[name="exampleRadios"]').forEach((elem) => {
+                    elem.addEventListener("change", function(event) {
+                      var item = event.target.value;
+                      if( item == "option1" ){
+                      //document.getElementById('form-button').classList.add("hidden");
+                      document.getElementById('payment-button').classList.add("hidden");
+                      document.getElementById('payment-info').classList.remove("hidden");
+                      }
+                      else{
+                      document.getElementById('payment-info').classList.add("hidden");
+                      document.getElementById('payment-button').classList.remove("hidden");
+                      document.getElementById('make-payment').addEventListener('click', function(e){
+                      submitFormData()
+                      })
+                      }
+
+                    });
+                  });
+                }
+
+            /*document.getElementById('form-button').classList.add("hidden");
+            document.getElementById('payment-info').classList.remove("hidden");*/
         })
         /*
         document.getElementById('make-payment').addEventListener('click', function(e){

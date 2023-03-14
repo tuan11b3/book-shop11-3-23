@@ -23,9 +23,6 @@
                 {% for product in products %}
                     <div class="card pd-25 bd-0 shadow-base m-3" style="width: 300px;">
                         <div class="d-flex justify-content-between align-items-center">
-                            {% if product.discount != 0.0 %}
-                                <span class="bg-danger pd-y-3 pd-x-10 tx-white tx-11 tx-roboto">{{product.discount}}% off</span>
-                            {% endif %}
                             <a href="{% url 'store:product' product.id %}" class="tx-gray-600"><i class="fa fa-heart-o"></i></a>
                         </div>
                         <a href="{% url 'store:product' product.id %}">
@@ -34,6 +31,7 @@
                         <div class="d-flex justify-content-between mg-b-5">
                             <p class="mg-b-0 tx-14 mg-t-3"><a href="{% url 'store:product' product.id %}" class="tx-inverse">{{product.name}}</a></p>
                             <p class="tx-danger tx-lato mg-b-0 font-weight-bold">{{product.price|floatformat:2}}$</p>
+                            <p class="tx-danger tx-lato mg-b-0 font-weight-bold">{{product.discount|floatformat:2}}$</p>
                         </div>
                         <div class="d-flex justify-content-between mg-b-5">
                             {% if product.digital %}

@@ -71,8 +71,8 @@ class DSDCKM(models.Model):
     cus_id = models.ForeignKey(Customer, on_delete=models.CASCADE)
     add_id = models.ForeignKey(ShippingAddress, on_delete=models.CASCADE)
 
-    # class Meta:
-    #     unique_together = ('cus_id', 'add_id')
+    class Meta:
+        unique_together = ('cus_id', 'add_id')
 
 
 class Order(models.Model):
@@ -81,6 +81,7 @@ class Order(models.Model):
     customer = models.ForeignKey(Customer, on_delete=models.SET_NULL, blank=True, null=True)
     date_order = models.DateTimeField(auto_now_add=True)
     #complete = models.BooleanField(default=False, null=True, blank=False)
+    transaction_id = models.CharField(max_length=200, null=True)
     status = models.IntegerField(choices=status_name, default=0, blank=True, null=True)
     shippingaddress = models.ForeignKey(ShippingAddress, on_delete=models.SET_NULL, blank=True, null=True)
     staff_id = models.ForeignKey(Staff, on_delete=models.SET_NULL, blank=True, null=True)
@@ -102,7 +103,6 @@ class Order(models.Model):
     @property
     def get_cart_total(self):
         orderitems  = self.orderitem_set.all()
-        # orderitems = self.
         total = sum([item.get_total for item in orderitems])
         return total
 
@@ -119,7 +119,10 @@ class OrderItem(models.Model):
 
     @property
     def get_total(self):
-        total = self.product.price * self.quantity
+        price = self.product.price
+        if self.product.discount > 0.00:
+            price = self.product.discount
+        total = price * self.quantity
         return total
 
 class Feedback(models.Model):

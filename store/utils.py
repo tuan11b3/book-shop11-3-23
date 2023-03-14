@@ -4,7 +4,7 @@ from . models import *
 def cartData(request):
     if request.user.is_authenticated:
         customer = request.user.customer
-        order, created = Order.objects.get_or_create(customer=customer, complete=False)
+        order, created = Order.objects.get_or_create(customer=customer, status=0)
         items = order.orderitem_set.all()
         cartItems = order.get_cart_items
     else:
@@ -12,6 +12,7 @@ def cartData(request):
         cartItems = cookieData['cartItems']
         order = cookieData['order']
         items = cookieData['items']
+        print("------item--------", items)
     return {'cartItems':cartItems, 'order':order, 'items':items}
 
 def cookieCart(request):
@@ -29,7 +30,11 @@ def cookieCart(request):
             cartItems += cart[i]['quantity']
 
             product = Product.objects.get(id=i)
-            total = (product.price * cart[i]['quantity'])
+
+            price = product.price
+            if product.discount > 0.00:
+                price = product.discount
+            total = (price * cart[i]['quantity'])
 
             order['get_cart_total'] += total
             order['get_cart_items'] += cart[i]['quantity']
@@ -72,10 +77,11 @@ def guestOrder(request, data):
     customer.name = name
     customer.save()
 
-    order = Order.objects.create(
-        customer=customer,
-        complete=False,
-    )
+    # order = Order.objects.get_or_create(
+    #     customer=customer,
+    #     status=0
+    # )
+    order, created = Order.objects.get_or_create(customer=customer, status=0)
 
     for item in items:
         product = Product.objects.get(id=item['product']['id'])
